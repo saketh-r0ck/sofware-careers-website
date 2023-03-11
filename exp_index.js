@@ -31,6 +31,10 @@ app.get('/signup.html',function(req,res){
 app.get('/userjobslist',(req,res)=>{
     res.render('userJobs');
 });
+
+app.get('/description',(req,res)=>{
+    res.render('description');
+})
 /*  posts  */
 
 const userslist = [];

@@ -74,7 +74,7 @@
 }
 
 #two{
-        padding: 30px 271px 6px 271px;
+  padding: 30px 271px 6px 271px;
     
 }
 #sal{
@@ -266,7 +266,7 @@
     }
   }
   .bg-overlay {
-    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("images/about.jpg");
+    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("public/images/about.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -275,13 +275,8 @@
     padding-top: 50px;
 }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+.applyflex .applybtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
