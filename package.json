@@ -1,0 +1,17 @@
+{
+  "name": "sc-jobs-website",
+  "version": "1.0.0",
+  "description": "Web Development Project",
+  "main": "exp_login.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sai Saketh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "require": "^2.4.20"
+  }
+}

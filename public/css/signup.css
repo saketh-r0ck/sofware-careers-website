@@ -1,0 +1,62 @@
+body{
+    margin: 0; 
+}
+
+h1{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 600;
+    padding: 30px;
+    margin-top: 0;
+}
+
+.section{
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+    height: 752px;
+}
+
+.container{
+    width: 500px;
+    border: 2px solid black;
+    border-radius: 25px;
+}
+.heading{
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    background: rgb(17,187,251);
+    background: linear-gradient(90deg, rgba(17,187,251,1) 37%, rgba(0,212,255,1) 57%);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+form .inputs{
+    margin: 1.25rem auto;
+    display: block;
+    width: 65%;
+    height: 40px;
+    padding-left: 15px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+.submitbutton{
+    text-align: center;
+}
+.submitbtn1{
+    background: rgb(17,187,251);
+    background: linear-gradient(90deg, rgba(17,187,251,1) 37%, rgba(0,212,255,1) 57%);
+    border: 1px;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 70%;
+    height: 40px;
+    margin: 0.5rem auto 2rem;
+    border-radius: 10px;
+}
+
+.submitbtn1:hover{
+    border: 2px solid black;
+    background: white;
+}
