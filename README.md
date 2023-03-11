@@ -8,9 +8,10 @@ My teammate is Burli Sai Tharun.
 
 Languages used
 -
-  HTML
-  CSS
-  Javascript
-  Node js
-  Express js
++ HTML
++ CSS
++ Javascript
++ Node js
++ Express js
   
+
