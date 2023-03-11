@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Pannel</title>
+    <link rel="stylesheet" href="css/userslist.css">
+    <link rel="stylesheet" href="css/managejobs.css">
+</head>
+<body>
+    <div class="section1">
+        <div class="navtext">
+            <h1>Admin Pannel</h1>
+        </div>
+        <div class="userlogo">
+            <p>Saketh</p>
+            <img src="images/Profile_image.jpeg" alt="">
+        </div>
+    </div>
+    <div class="section2">
+        <div class="category">
+            <div class="categoryblocks"><a href="usersList.html"><p>Users List</p></a></div>
+            <div class="categoryblocks"><a href="adminIndex.html"><p>Jobs List</p></a></div>
+            <div class="categoryblocks active"><a href="manageJobs.html"><p>Manage Job</p></a></div>  
+            <div class="categoryblocks"><a href="applications.html"><p>Applications</p></a></div>
+        </div>
+        <div class="container">
+           <div class="section3"> 
+                <div class="headbox">
+                    <h2>New Job Details</h2>
+                    
+                        <button type="submit"> ADD JOB </button>
+                    
+                </div>
+                <form action="" method="post">
+                    <div class="forminputs">
+                        <label for="">Job Title</label>
+                        <span>:</span>
+                        <input type="text">
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Job Category</label>
+                        <span>:</span>
+                        <select name="" id="">
+                            <option value="#">Select job category</option>
+                            <option value="">Job 1</option>
+                            <option value="">Job 2</option>
+                        </select>                  
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Job Id</label>
+                        <span>:</span>
+                        <label for="" style="margin-left: 20px;">#12345</label>
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Number of positions</label>
+                        <span>:</span>
+                        <input type="text">
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Experience</label>
+                        <span>:</span>
+                        <input type="text">
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Employment Type</label>
+                        <span>:</span>
+                        <input type="radio"><label for="" style="width:150px">Part Time</label>
+                        <input type="radio"><label for="" style="width:150px">Full Time</label>
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Location</label>
+                        <span>:</span>
+                        <input type="text">
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Job Description</label>
+                        <span>:</span>
+                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Qualification</label>
+                        <span>:</span>
+                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Roles and Responsibilites</label>
+                        <span>:</span>
+                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
