@@ -40,10 +40,13 @@ form{
     width: 80%;
     margin:  20px auto;
     background-color: white;
-    padding: 20px 0;
+    
     justify-content: center;
 }
 
+form p{
+    color: red;
+}
 form label{
     font-size: 1.5rem;
     font-weight: 600;
