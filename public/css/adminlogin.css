@@ -43,10 +43,14 @@ form{
     
 }
 
+form p{
+    color: red;
+    font-size: 1.25rem;
+}
+
 form label{
     font-size: 1.25rem;
-    font-weight: 500;
-    
+    font-weight: 500;   
 }
 form .inputs{
     width: 60%;
@@ -79,6 +83,7 @@ form  button{
 .submitbtn:hover{
     border: 2px solid black;
     background: white;
+    color: rgb(15,162,217);
 }
 
 

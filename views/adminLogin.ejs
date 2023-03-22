@@ -15,10 +15,11 @@
             
             <div class="forms">
                 <form id="form" action="/admin" method="post">
+                    <p><%=message%></p>
                     <label for="username">Username :</label>
-                    <input class="inputs "type="text"  >
+                    <input class="inputs" name="adminusername" type="text" autocomplete="off" >
                     <label for="password">Password :</label>
-                    <input class="inputs" type="password" name="" id="" >
+                    <input class="inputs" type="password" name="adminpassword" id="" >
                     <div class="btn"><button class="submitbtn" type="submit">Login</button></div>
                 </form>
             </div>
