@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TS JOBS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/form.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+  
+  </head>
+  <body>
+    <nav id="webnavbar" class="navbar fixed-top navbar-expand-lg navbar-light justify-content-center">
+      <div class="container-fluid">
+          <div class="navbar-brand d-flex w-50 justify-content-center">
+              <p>Company</p>
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse w-100" id="navbarNavDropdown">
+              <ul class="navbar-nav w-100 justify-content-center">
+                  <li class="nav-item ">
+                      <a class="nav-link "  href="">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link aboutlink" href="">About Us</a>
+                  </li>    
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Careers</a>
+                  </li>
+                  
+                  <li class="nav-item ">
+                      <a class="nav-link " href="">Contact Us</a>
+                  </li>
+                  <li class="nav-item ">
+                      <a class="nav-link " href="login.html">Login</a>
+                  </li>
+                  
+              </ul>
+          </div>
+      </div>
+    </nav>
+    
+    <div class="box">
+    <div class="container-fluid reveal" style="
+    background: url('images/contact.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    ">
+      <div class="container w-lg-50">
+        <form class="row g-3 p-5 d-flex justify-content-center "  style="border-radius: 20px;" id="career" action="/form" method="post" enctype="text/plain">
+            <div class="col-md-7 fw-bolder">
+              <label for="inputEmail4" class="form-label " style="color: black;">Job Type</label><br>
+              Job Title
+            </div>
+            <div class="col-md-7 fw-bolder">
+            <label for="inputEmail4" class="form-label " style="color: black;"> Name</label>
+            <input
+            style="border: 1px solid black; "
+              type="text"
+              name="name"
+              class="form-control"
+              id="inputEmail4"
+              placeholder="Enter Your Name"
+              required
+            />
+          </div>
+       
+          <div class="mb-3 col-md-7 d-block fw-bolder">
+            <label for="formGroupExampleInput" class="form-label" style="color:black;">Email</label>
+            <input
+            style="border: 1px solid black;"
+
+              type="email"
+              name="email"
+              class="form-control"
+              id="formGroupExampleInput"
+              placeholder="Enter Your Email"
+              required
+            />
+          </div>
+          <div class="col-md-7 fw-bolder">
+            <label for="inputAddress2" class="form-label" style="color: black;">Phone Number</label>
+            <input
+            style="border: 1px solid black;"
+
+              type="text"
+              name="Phone Number"
+              placeholder="Enter Your Phone Number"
+              class="form-control"
+              id="inputAddress2"
+            />
+          </div>
+          <div class="col-md-7 fw-bolder">
+            <label for="inputAddress2" class="form-label" style="color: black;">Address</label>
+            <input
+            style="border: 1px solid black;"
+
+              type="text"
+              name="Address"
+              placeholder="Enter Your Address"
+              class="form-control"
+              id="inputAddress2"
+            />
+          </div>
+
+          <div class=" col-md-7 fw-bolder">
+            <label for="formGroupExampleInput2" class="form-label"
+            style="color: black;">Resume</label
+            >
+
+            <label id="fileLabel"></label
+            ><input
+            style="border: 1px solid black;"
+
+              type="file"
+              name="file"
+              class="form-control w-100"
+              title="Choose a video please"
+              id="aa"
+              onchange="pressed()"
+              required
+            />
+          </div>
+          <div class=" mb-3 col-lg-6 my-4 " >
+            <input class="btn btn-secondary px-5 " type="submit" value="SUBMIT" ></input>
+              </div>
+
+        </form>
+      </div>
+    </div> 
+    <!-- ======= Footer ======= -->
+    <footer id="footer" >
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+    
+            <div class="col-lg-4 col-md-6 footer-info">
+              <p id ="three">TS JOBS</p>
+              <p></p>
+            </div>
+    
+            <div class="col-lg-4 col-md-6 footer-links ">
+              <h4>Navigation</h4>
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> <a style="text-decoration: none;" href="index.html">Home</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a style="text-decoration: none;"href="careers.html">Careers</a></li>
+                <li><i class="bi bi-chevron-right"></i> <a style="text-decoration: none;"href="about.html">About</a></li>
+              
+              </ul>
+            </div>
+    
+          
+    
+            <div class="col-lg-4 col-md-6 footer-contact ">
+              <a href="contact.html" style="text-decoration: none;"><h4>Contact Us</h4></a>
+              <p>
+                A108 Adam Street <br>
+                New York, NY 535022<br>
+                United States <br>
+                <strong>Phone:</strong> +1 5589 55488 55<br>
+                <strong>Email:</strong> info@example.com<br>
+              </p>
+    
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                <a href="#" class="skype"><i class="fa fa-skype"></i></a>
+                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+              </div>
+    
+            </div>
+    
+          </div>
+        </div>
+      </div>
+    
+      <div class="container ">
+        <div class="copyright py-4">
+          &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved
+        </div>
+        
+      </div>
+    </footer><!-- End  Footer -->
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+
+    </script>
+
+  </body>
+
+</html>

@@ -2,14 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
-const app = express();
 const bcrypt = require('bcrypt');
+
+const app = express();
 const port = 3000;
 
 
 mongoose.connect('mongodb://localhost:27017/careersdb',{useNewUrlParser: true})
     .then(() => {
-        console.log("MOngo Db connection open!!");
+        console.log("MongoDb connection open !!");
     })
     .catch((err) =>{
         console.log("Oh no Mongo Connection Error!!!!");
@@ -95,11 +96,6 @@ app.post("/login",async function(req,res){
         }    
     })
 });
-
-
-
-
-
 
 /*  Signup and users list  */
 
@@ -194,3 +190,15 @@ app.post("/admin", async function(req,res){
     }
    
 });
+
+
+/*  form  */ 
+
+app.get('/form',(req,res)=>{
+    
+    res.render('form');
+})
+
+app.post('/form',(req,res)=>{
+    console.log(req.body)
+})
