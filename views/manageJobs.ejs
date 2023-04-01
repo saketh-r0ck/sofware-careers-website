@@ -27,13 +27,14 @@
         </div>
         <div class="container">
            <div class="section3"> 
-                <div class="headbox">
-                    <h2>New Job Details</h2>
-                    
-                        <button type="submit"> ADD JOB </button>
-                    
-                </div>
-                <form action="" method="post">
+                
+                <form action="/manageJobs" method="post">
+                    <div class="headbox">
+                        <h2>New Job Details</h2>
+                        
+                            <button type="submit"> ADD JOB </button>
+                        
+                    </div>
                     <div class="forminputs">
                         <label for="">Job Title</label>
                         <span>:</span>
@@ -51,7 +52,7 @@
                     <div class="forminputs">
                         <label for="">Job Id</label>
                         <span>:</span>
-                        <label for="" style="margin-left: 20px;">#12345</label>
+                        <label for="" style="margin-left: 20px;"><%=random%></label>
                     </div>
                     <div class="forminputs">
                         <label for="">Number of positions</label>

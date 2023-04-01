@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 
-
 mongoose.connect('mongodb://localhost:27017/careersdb',{useNewUrlParser: true})
     .then(() => {
         console.log("MongoDb connection open !!");
@@ -44,8 +43,9 @@ app.get('/userjobslist',(req,res)=>{
 });
 
 app.get('/description',(req,res)=>{
-    res.render('description');
+    res.render('description',{user:loggedUser});
 })
+
 /*  posts  */
 
 
@@ -63,9 +63,9 @@ app.get("/adminIndex.html",(req,res)=>{
 app.get("/applications.html",(req,res)=>{
     res.render('applications');
 });
-app.get("/manageJobs.html",(req,res)=>{
-    res.render('manageJobs');
-});
+
+/*  users page  */ 
+
 
 
 /*   login  */
@@ -75,14 +75,34 @@ app.get('/login.html',(req,res)=>{
     res.render('login',{message: loginMessage});
 });
 
+let loggedUser;
 
+userlist=[{jobtitle:"SOFTWARE DEVELOPER",
+jobshowdescription:"A software developer is a professional who is responsible for designing, creating, testing and maintaining computer software..",
+jobdescription:"A software developer is a professional who is responsible for designing, creating, testing and maintaining computer software. They typically work with programming languages such as Java, C++, Python, and Ruby, and use various software development tools and platforms to create software applications that meet the needs of their clients or organizations. Software developers also collaborate with other professionals such as project managers, quality assurance testers, and technical writers to ensure that the software they create is user-friendly, reliable, and efficient.",
+salary:"90k",
+experience:"5 years",
+location:"Mumbai"},
+{jobtitle:"DATA SCIENTIST",
+jobshowdescription:"A data scientist is responsible for analyzing large and complex data sets to extract insights and trends..",
+jobdescription:"A data scientist is responsible for analyzing large and complex data sets to extract insights and trends. They use statistical analysis, machine learning algorithms, and data visualization tools to identify patterns and make predictions about future trends. Data scientists work with a variety of data sources, including structured and unstructured data, and use programming languages such as Python, R, and SQL to manipulate and analyze the data. They also collaborate with other team members, such as business analysts and software developers, to develop data-driven solutions to business problems.",
+salary:"70k",
+experience:"4 years",
+location:"Hyderabad"},
+{jobtitle:"DATABASE ADMINISTRATOR",
+jobshowdescription:" A database administrator (DBA) is responsible for managing the performance, security, and availability of databases..",
+jobdescription:" A database administrator (DBA) is responsible for managing the performance, security, and availability of databases. They work with database management systems (DBMS) such as Oracle, SQL Server, and MySQL to create and manage databases. They ensure that databases are backed up, recoverable, and secure. They also monitor database performance and optimize database design to improve performance. They work with developers to ensure that databases are designed to meet application requirements.",
+salary:"80k",
+experience:"6 years",
+location:"Delhi"}
+]
 app.post("/login",async function(req,res){
-    let loggedUser = req.body.username;
+    loggedUser = req.body.username;
     await User.findOne({userName : loggedUser}).then((user_found)=>{    
         if (user_found){   
             try{        
                 if(bcrypt.compare(req.body.password, user_found.password)){
-                    res.render('userpage',{user : req.body.username})
+                    res.render('userpage',{user : req.body.username,userslist:userlist})
                 }else{
                     loginMessage = "Password doesn't match"
                     res.redirect('/login.html')
@@ -199,6 +219,35 @@ app.get('/form',(req,res)=>{
     res.render('form');
 })
 
-app.post('/form',(req,res)=>{
+app.post('/form.html',(req,res)=>{
+    
     console.log(req.body)
+})
+
+
+
+/*    Manage JObs   */
+
+app.get("/manageJobs.html",(req,res)=>{
+    const min = 10000;
+    const max = 99999;
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    res.render('manageJobs',{random:randomNum});
+});
+
+app.post("/manageJobs",(req,res)=>{
+    console.log(req.body)
+    res.redirect("/manageJobs.html")
+  
+})
+
+
+
+/*   user profile    */ 
+
+app.get('/userProfile',async(req,res)=>{
+    await User.findOne({userName : loggedUser}).then(function(foundUser){
+        res.render('userProfile',{user:loggedUser,name:foundUser.firstName+" "+foundUser.lastName,email:foundUser.email})
+    })
+    
 })

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/description.css" />
+    <link rel="stylesheet" href="css/form.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
   
@@ -16,7 +16,7 @@
   <body>
     <nav id="webnavbar" class="navbar fixed-top navbar-expand-lg navbar-light justify-content-center">
       <div class="container-fluid">
-          <div class="navbar-brand d-flex w-50 justify-content-center">
+          <div class="navbar-brand d-flex w-50 justify-content-center"><a href="homepage1.html">
               <p>Company</p>
           </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -46,61 +46,66 @@
           </div>
       </div>
     </nav>
-   
-    <div class="box">
-        <div class=" bg-overlay" style="background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url('images/about.jpg');">
-            <div class="row m-5 text-center">
-                <h1>UI/UX DESIGNER</h1>
-                
-            </div>
-        </div>
-    <div class="m-5">  
-    <div><h1 style="text-align: center;">UI/UX DESIGNER</h1></div>
     
-      <div class="row applyflex">
-        <div class="col-8 ">
-          <h5 class="">Number of positions :&nbsp;&nbsp;05</h5>
-          <h5 class="">Employment Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;Part Time</h5>
-          <h5 class="">Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;Mumbai</h5>
-        </div>
-        <div class="col-4 applybtn">
-          <a href="form"><button style="border-color:#34dbff;cursor:pointer;width:180px;height:45px;background-color:white;color:#6673b0;letter-spacing :3px; border-radius: 9PX;"><h4>APPLY NOW</h4></button></a>
+    <div class="box">
+ 
+ 
+
+  <!-- User Information and Previous Applications -->
+  <div class="container my-5">
+    <div class="row">
+      <!-- Previous Applications -->
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h2>My Applications</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Job Title</th>
+                  <th>Application Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Software Engineer</td>
+                  <td>Jan 1, 2022</td>
+                  <td>Rejected</td>
+                </tr>
+                <tr>
+                  <td>Data Analyst</td>
+                  <td>Feb 15, 2022</td>
+                  <td>Under Review</td>
+                </tr>
+                <tr>
+                  <td>Product Manager</td>
+                  <td>Mar 10, 2022</td>
+                  <td>Interview Scheduled</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    
-    <div>
-        <h3>Job description</h3>
-        <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
+      <!-- User Information -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md-4 mb-4" style="display: flex; justify-content: center;" >
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Picture" class="img-thumbnail">
+              </div>
+            <h2>User Information</h2>
+            <p>Name: <%=name%></p>
+            <p>Email: <%=email%></p>
+            <p>Phone: 123456789</p>
+            <a href="/" class="btn btn-primary">Logout</a>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <div>
-        <h3>Required Knowledge, Skills, and Abilities</h3>
-        <ul style=" list-style-type: circle;">
-            <li>System Software Development</li>
-            <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
-            <li>Research and code , libraries, APIs and frameworks</li>
-            <li>Strong knowledge on software development life cycle</li>
-            <li>Strong problem solving and debugging skills</li>
-          </ul>
-    </div>
-    <div>
-        <h3>Education + Experience</h3>
-        <ul style=" list-style-type: circle;">
-            <li>3 or more years of professional design experience</li>
-            <li>Direct response email experience</li>
-            <li>Ecommerce website design experience</li>
-            <li>Familiarity with mobile and web apps preferred</li>
-            <li>Strong problem solving and debugging skills</li>
-          </ul>
-    </div>
-  <div>
-        
   </div>
-    <div class="gamesbuttondiv  pt-5 d-flex  justify-content-center reveal">
-        <button class="viewgames mx-4 " onclick="location.href = 'careers.html';">
-         <span>APPLY FOR JOB</span>
-        </button>
-    </div>
-  </div> 
     <!-- ======= Footer ======= -->
 <footer id="footer" >
   <div class="footer-top">
