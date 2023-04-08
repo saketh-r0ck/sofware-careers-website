@@ -4,8 +4,13 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+/*   Restapi   */
+const jobsApi = require('./routes/jobsRoute')
+
 const app = express();
 const port = 3000;
+
+app.use('/jobs',jobsApi)
 
 mongoose.connect('mongodb://localhost:27017/careersdb',{useNewUrlParser: true})
     .then(() => {
@@ -16,6 +21,13 @@ mongoose.connect('mongodb://localhost:27017/careersdb',{useNewUrlParser: true})
         console.log(err);
     });
 
+
+
+
+
+
+
+    
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname+"/public"));
 
@@ -24,6 +36,12 @@ app.set('view engine','ejs');
 app.listen(port,function(){
     console.log('Listening on port ' + port);
 });
+
+
+
+
+
+
 
 
 /*  gets */
@@ -224,23 +242,65 @@ app.post('/form.html',(req,res)=>{
     console.log(req.body)
 })
 
-
-
 /*    Manage JObs   */
-
-app.get("/manageJobs.html",(req,res)=>{
+let randomNum;
+app.get("/manageJobs",(req,res)=>{
     const min = 10000;
     const max = 99999;
-    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     res.render('manageJobs',{random:randomNum});
 });
 
+const jobsSchema = new mongoose.Schema({
+    Job_id : Number,
+    Posted_Date : String,
+    Title : String,
+    Category : String,
+    No_Of_Positions : String,
+    Experience :String,
+    Salary : String,
+    Employment_Type : String,
+    Location : String,
+    Job_Description : String,
+    Qualification : String,
+    Roles_Responsibilities : String
+});
+
+const Job = mongoose.model('Job',jobsSchema)
+
+function getDate(){
+
+    const date_ob = new Date();  
+    let date = ("0" + date_ob.getDate()).slice(-2); // current date
+    let month = date_ob.toLocaleString('default', { month: 'short' });    // current month
+    let year = date_ob.getFullYear();   // current year
+    let hours = date_ob.getHours();     // current hours
+    let minutes = date_ob.getMinutes(); // current minutes
+    let seconds = date_ob.getSeconds(); // current seconds
+    let date_time =  (date + " " + month + " " + year + " " + hours + ":" + minutes + ":" + seconds);    
+    return date_time
+}
+
+
 app.post("/manageJobs",(req,res)=>{
-    console.log(req.body)
-    res.redirect("/manageJobs.html")
+    
+    const newJob = new Job({
+        Job_id : randomNum,
+        Posted_Date :  getDate(),
+        Title : req.body.job_title,
+        Category : req.body.job_category,
+        No_Of_Positions : req.body.positions,
+        Experience : req.body.experience,
+        Salary : req.body.salary,
+        Employment_Type : req.body.employment_type,
+        Location : req.body.location,
+        Job_Description : req.body.job_description,
+        Qualification : req.body.qualification,
+        Roles_Responsibilities : req.body.roles_responsibilities
+    })
+    newJob.save()
   
 })
-
 
 
 /*   user profile    */ 

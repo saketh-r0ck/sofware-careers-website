@@ -7,6 +7,7 @@
     <title>Admin Pannel</title>
     <link rel="stylesheet" href="css/userslist.css">
     <link rel="stylesheet" href="css/managejobs.css">
+    <script src="js/manageJobs.js" defer></script>
 </head>
 <body>
     <div class="section1">
@@ -22,7 +23,7 @@
         <div class="category">
             <div class="categoryblocks"><a href="usersList.html"><p>Users List</p></a></div>
             <div class="categoryblocks"><a href="adminIndex.html"><p>Jobs List</p></a></div>
-            <div class="categoryblocks active"><a href="manageJobs.html"><p>Manage Job</p></a></div>  
+            <div class="categoryblocks active"><a href="manageJobs"><p>Manage Job</p></a></div>  
             <div class="categoryblocks"><a href="applications.html"><p>Applications</p></a></div>
         </div>
         <div class="container">
@@ -38,15 +39,15 @@
                     <div class="forminputs">
                         <label for="">Job Title</label>
                         <span>:</span>
-                        <input type="text">
+                        <input type="text" name="job_title">
                     </div>
                     <div class="forminputs">
                         <label for="">Job Category</label>
                         <span>:</span>
-                        <select name="" id="">
+                        <select name="job_category" id="">
                             <option value="#">Select job category</option>
-                            <option value="">Job 1</option>
-                            <option value="">Job 2</option>
+                            <option value="Job1">Job 1</option>
+                            <option value="Job2">Job 2</option>
                         </select>                  
                     </div>
                     <div class="forminputs">
@@ -57,38 +58,43 @@
                     <div class="forminputs">
                         <label for="">Number of positions</label>
                         <span>:</span>
-                        <input type="text">
+                        <input type="text" name="positions">
                     </div>
                     <div class="forminputs">
-                        <label for="">Experience</label>
+                        <label for="">Experience Required</label>
                         <span>:</span>
-                        <input type="text">
+                        <input type="text" name="experience">
+                    </div>
+                    <div class="forminputs">
+                        <label for="">Salary</label>
+                        <span>:</span>
+                        <input type="text" name="salary">
                     </div>
                     <div class="forminputs">
                         <label for="">Employment Type</label>
                         <span>:</span>
-                        <input type="radio"><label for="" style="width:150px">Part Time</label>
-                        <input type="radio"><label for="" style="width:150px">Full Time</label>
+                        <input type="radio" name="employment_type" value="Part Time"><label for="" style="width:150px">Part Time</label>
+                        <input type="radio" name="employment_type" value="Full Time"><label for="" style="width:150px">Full Time</label>
                     </div>
                     <div class="forminputs">
                         <label for="">Location</label>
                         <span>:</span>
-                        <input type="text">
+                        <input type="text" name="location">
                     </div>
                     <div class="forminputs">
                         <label for="">Job Description</label>
                         <span>:</span>
-                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                        <textarea name="job_description" id="" cols="40" rows="7"></textarea>
                     </div>
                     <div class="forminputs">
                         <label for="">Qualification</label>
                         <span>:</span>
-                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                        <textarea name="qualification" id="" cols="40" rows="7"></textarea>
                     </div>
                     <div class="forminputs">
                         <label for="">Roles and Responsibilites</label>
                         <span>:</span>
-                        <textarea name="" id="" cols="40" rows="7"></textarea>
+                        <textarea name="roles_resposibilities" id="" cols="40" rows="7"></textarea>
                     </div>
                     
                 </form>
