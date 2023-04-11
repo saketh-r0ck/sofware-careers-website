@@ -7,71 +7,40 @@
                     <button>DELETE</button>
                 </div>
             </div>
+            
             <div class="jobslist">
-                <table>        
-                                
-                    <tr>
-                        <tr>
-                            <td>Job Id</td><td class="tabletext">Job Title 1</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td>
-                        </tr>
-                        <tr>
-                            <div>
-                            
-                                <div>
-                                    <p>Job category: Designing</p>
-                                    <p>Employment Type: Part time</p>
-                                    <p>Location : Hyderabad</p>
-                                </div>
-                                <div>
-                                    <p>Salary : 50k</p>
-                                    <p>Experience : 5 years</p>
-                                    <p>No of positions: 6</p>
-                                </div>
-                                <div>
-                                    <p>Job Description : Manage, architect, and analyze big data to build data driven business insights and high 
-                                        impact data models to generate significant business value. Create models and processes to collect, distill and 
-                                        interpret data with a view to aid better, more informed decision making. Examine and explore data from
-                                        multiple disparate sources with the goal of discovering insights which in turn can provide competitive advantage for our stakeholders.
-                                    </p>
-                                </div>
-                                <div>
-                                    <p>
-                                        Qualification: Must Have Knowledge of statistical techniques and machine learning algorithms
-                                        Artificial Intelligence
-                                        Hands-on experience of analysis tools like R, Python
-                                        Understanding of Text analysis- Natural Language processing (NLP)
-                                        Knowledge on Google Cloud Platform
-                                        Advanced Excel, PowerPoint skills
-                                        Advanced communication (written and oral) and strong interpersonal skills
-                                        Ability to work cross-culturally
-                                        Good to have Deep Learning
-                                        Human Resources experience
-                                        VBA and visualization tools like Qliksense, Qlikview will be an added advantage
-                                    </p>
-                                </div>
-                                <div>
-                                    <p>
-                                        Roles and Responsiblities : Create insights from predictive statistical modeling, mathematical knowledge, tools, and techniques to solve complex problems and deliver value
-                                        Implement new predictive and prescriptive solutions based upon business needs and requirements
-                                        Translate business issues into specific requirements to develop analytic solutions, and identify appropriate data to support the solution
-                                        Deliver large-scale programs that integrate processes with technology to help clients achieve high performance
-                                        Responsible for implementation of complete big data solutions including data acquisition, storage, transformation, and analysis
-                                        Manage a specific area of a project or entire project to solve analytics problems for clients
-                                        Individual contributor and/or oversees a small work effort
-                                        Work with minimal supervision
-                                    </p>
-                                </div>
-                            
+                <%for(let i=0;i<jlist.length;i++){ %>
+                    <div class="container">
+                        <div class="row list mx-0">
+                            <div class="col-3 p-3"><%=jlist[i].Job_id%></div>
+                            <div class="col-5 p-3"><%=jlist[i].Title%></div>
+                            <div class="col-3 p-3"><%=jlist[i].Posted_Date%></div>
+                            <button class="down_btn col-1 p-3"><i class="fa-solid fa-angle-down"></i></button>
+                        </div>
+                        <div class="drop_down">
+                    
+                            <div class="details1">
+                                <p><span>Job category: </span><%=jlist[i].Category%></p>
+                                <p><span>Employment Type: </span><%=jlist[i].Employment_Type%></p>
+                                <p><span>Location : </span><%=jlist[i].Location%></p>
                             </div>
-                        </tr>
-
-                    </tr>
-                    <tr><td>Job Id</td><td class="tabletext">Job Title 2</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td></tr>
-                    <tr><td>Job Id</td><td class="tabletext">Job Title 3</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td></tr>
-                    <tr><td>Job Id</td><td class="tabletext">Job Title 4</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td></tr>
-                    <tr><td>Job Id</td><td class="tabletext">Job Title 5</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td></tr>
-                    <tr><td>Job Id</td><td class="tabletext">Job Title 6</td><td>Date Modified</td><td class="tablebtns"><button><i class="fa-solid fa-angle-down"></i></button></td></tr>
-                </table>
+                            <div class="details1">
+                                <p><span>Salary : </span><%=jlist[i].Salary%></p>
+                                <p><span>Experience : </span><%=jlist[i].Experience%></p>
+                                <p><span>No of positions: </span><%=jlist[i].No_Of_Positions%></p>
+                            </div>
+                            <div class="details2">
+                                <p><span>Job Description :</span><%=jlist[i].Job_Description%></p>
+                            </div>
+                            <div class="details2">
+                                <p><span>Qualification:</span> <%=jlist[i].Qualification%></p>
+                            </div>
+                            <div class="details2">
+                                <p><span> Roles and Responsiblities :</span> <%=jlist[i].Roles_Responsibilities%></p>
+                            </div>
+                        </div>
+                    </div>
+                <%}%>                
             </div>
         </div>
  

@@ -14,16 +14,18 @@
             <div class="heading">
                 <h1>Sign Up</h1>
             </div>
-            <form id="form" action="/signup" method="post" >     
-                <p><%=message%></p>     
-                <input class="inputs" name="firstname" type="text" placeholder="First Name">
-                <input class="inputs" name="secondname" type="text" placeholder="Last Name">   
-                <input class="inputs" name="username" type="text" placeholder="Username">
-                <input class="inputs" name="email" type="text" placeholder="Email">
-                <input class="inputs" name="password" type="password" placeholder="Password">
-                <input class="inputs" name="confirmpassword" type="password" placeholder="Confirm Password">
+            <form id="signupform" action="" method=""  onsubmit="return validateForm()"  >     
+                <p><%=message%></p>  
+                <div id="error-message" style="text-align: center; font-weight: bold; font-size: large;"></div>
+                
+                <input class="inputs" id="firstname" name="firstname" type="text" placeholder="First Name" required>
+                <input class="inputs" id="lastname" name="lastname" type="text" placeholder="Last Name" required>   
+                <input class="inputs" id="username" name="username" type="text" placeholder="Username"  required>
+                <input class="inputs" id="email" name="email" type="text" placeholder="Email"  required>
+                <input class="inputs" id="password" name="password" type="password" placeholder="Password"  required>
+                <input class="inputs" id="confirmpassword" name="confirmpassword" type="password" placeholder="Confirm Password"  required>
                 <div class="submitbutton">
-                    <input type="submit" class="submitbtn1">
+                    <button type="submit" class="submitbtn1" value="Sign Up" >SUBMIT</button>
                 </div>
             </form>
         </div>

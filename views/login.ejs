@@ -14,14 +14,16 @@
             <div class="heading"><h1 >Login</h1></div>
             
             <div class="forms">
-                <form id="form" action="/login" method="post">
+                <form id="login-form" action="" method=""  onsubmit="return validateForm()">
                     <p><%=message%></p>
+                    <div id="error-message" style="text-align: center; font-weight: bold; font-size: large;"></div>
+
                     <label for="username">Username :</label>
-                    <input class="inputs" type="text" name="username" placeholder="Enter your Username" >
+                    <input class="inputs" type="text" id="username" name="username" required  placeholder="Enter your Username" >
                     <label for="password">Password :</label>
-                    <input class="inputs" type="password" name="password" id="" placeholder="Enter your Password" >
+                    <input class="inputs" type="password"  id="password" name="password" required placeholder="Enter your Password" >
                     Don't have account ? <a href="signup.html">Sign up</a>
-                    <input type="submit" name="submit" class="submitbtn inputsubmit">
+                    <input  type="submit" name="submit" class="submitbtn inputsubmit mb-2">
                 </form>
         
             </div>

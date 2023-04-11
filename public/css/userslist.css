@@ -66,6 +66,10 @@ a{
     color: rgb(17,187,251);
 }
 
+.section2 .category a{
+    text-decoration: none;
+}
+
 /* Section-2 container  */
 
 .section2 .container{

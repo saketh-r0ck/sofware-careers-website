@@ -54,13 +54,14 @@
     </nav>
     
     <div class="box">
-      <div class="container-fluid " id="two">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 py-2 border-dark border-2" type="search" placeholder="Job Name" aria-label="Search">
-          <button class="btn btn-outline-success px-5 border-dark border-1" type="submit">Search</button>
+      <div class="container-fluid mt-5"  >
+        <form class="d-flex col-sm-4 col-md-6 col-lg-8 m-auto" role="search ">
+          <input class="form-control mx-2  border-dark border-2 " type="search" placeholder="Job Name" aria-label="Search">
+          <button class="btn btn-outline-success  border-dark border-1" type="submit">Search</button>
         </form>
       </div>
       <div class="container " data-aos="fade-up">
+        <form action="/userpage" method="post" >
         <div class="row mb-5 d-flex justify-content-center" >
           <% for(let i=0;i<userslist.length;i++){%>
           <div class="d-md-flex post-entry-2 half mt-5 reveal w-75" style="box-shadow:  6px 6px  7px; border: 3px solid aqua; border-radius: 8px;">
@@ -69,20 +70,24 @@
             </a>
             <div class="pe-md-5 mt-4 mt-md-0">
                 <div class="post-meta mt-4 ">CURRENT OPENINGS</div>
-                <h2 class="mb-2 display-4  fs-1" style="font-weight: 600;"><%= userslist[i].jobtitle %></h2>
-              <div id ="sal"><p>Salary:<%=userslist[i].salary%>&nbsp;&nbsp;&nbsp;&nbsp;</p><p>Experience:<%=userslist[i].experience%> &nbsp;&nbsp;&nbsp;&nbsp;</p><p>Location:<%= userslist[i].location%>&nbsp;&nbsp;&nbsp;&nbsp;</p></div> 
-              <p class="card-text" style="overflow : hidden;
-              display : none"><%=userslist[i].jobshowdescription%></p>
-              <a href="/description"><button style="border-color:#34dbff;cursor:pointer;width:180px;height:45px;background-color:white;color:#6673b0;letter-spacing :3px; border-radius: 9PX;"><h4>APPLY NOW</h4></button></a>
+                <h2 class="mb-2 display-4  fs-1" style="font-weight: 600;"><%= userslist[i].Title %></h2>
+              <div id ="sal"><p>Salary:<%=userslist[i].Salary%>&nbsp;&nbsp;&nbsp;&nbsp;</p><p>Experience:<%=userslist[i].Experience%> &nbsp;&nbsp;&nbsp;&nbsp;</p><p>Location:<%= userslist[i].Location%>&nbsp;&nbsp;&nbsp;&nbsp;</p></div> 
+              <p class="card-body" style="max-width: 700px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;"><%=userslist[i].Job_Description%></p>
+              <button type="submit" name="job" value="<%= userslist[i].Job_id %>"style="border-color:#34dbff;cursor:pointer;width:180px;height:45px;background-color:white;color:#6673b0;letter-spacing :3px; border-radius: 9PX;"><h4>APPLY NOW</h4></button>
             <br>
             <br>
               </div>
         </div>
         <%}%>
+      </form>
       </div>
-         <!-- ======= Footer ======= -->
 
     </div>
+         <!-- ======= Footer ======= -->
+
     <footer id="footer" >
       <div class="footer-top">
         <div class="container">

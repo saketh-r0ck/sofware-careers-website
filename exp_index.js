@@ -20,13 +20,6 @@ mongoose.connect('mongodb://localhost:27017/careersdb',{useNewUrlParser: true})
         console.log("Oh no Mongo Connection Error!!!!");
         console.log(err);
     });
-
-
-
-
-
-
-
     
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname+"/public"));
@@ -36,12 +29,6 @@ app.set('view engine','ejs');
 app.listen(port,function(){
     console.log('Listening on port ' + port);
 });
-
-
-
-
-
-
 
 
 /*  gets */
@@ -56,31 +43,21 @@ app.get('/signup.html',function(req,res){
     res.render("signup",{message : signupMessage});
 });
 
-app.get('/userjobslist',(req,res)=>{
-    res.render('userJobs');
-});
-
-app.get('/description',(req,res)=>{
-    res.render('description',{user:loggedUser});
-})
-
-/*  posts  */
 
 
 
+/*  search */
+
+app.post("/search",async function(req,res){
+    let searchkey =req.body.key;
+    let data=await Job.find({Title:{$regex: searchkey,$options:'i'}})
+    res.render('userpage',{user : loggedUser,userslist:data})
+ });
 
 
 /*      admin     */
 
 
-
-app.get("/adminIndex.html",(req,res)=>{
-    res.render('adminIndex');
-});
-
-app.get("/applications.html",(req,res)=>{
-    res.render('applications');
-});
 
 /*  users page  */ 
 
@@ -94,33 +71,15 @@ app.get('/login.html',(req,res)=>{
 });
 
 let loggedUser;
-
-userlist=[{jobtitle:"SOFTWARE DEVELOPER",
-jobshowdescription:"A software developer is a professional who is responsible for designing, creating, testing and maintaining computer software..",
-jobdescription:"A software developer is a professional who is responsible for designing, creating, testing and maintaining computer software. They typically work with programming languages such as Java, C++, Python, and Ruby, and use various software development tools and platforms to create software applications that meet the needs of their clients or organizations. Software developers also collaborate with other professionals such as project managers, quality assurance testers, and technical writers to ensure that the software they create is user-friendly, reliable, and efficient.",
-salary:"90k",
-experience:"5 years",
-location:"Mumbai"},
-{jobtitle:"DATA SCIENTIST",
-jobshowdescription:"A data scientist is responsible for analyzing large and complex data sets to extract insights and trends..",
-jobdescription:"A data scientist is responsible for analyzing large and complex data sets to extract insights and trends. They use statistical analysis, machine learning algorithms, and data visualization tools to identify patterns and make predictions about future trends. Data scientists work with a variety of data sources, including structured and unstructured data, and use programming languages such as Python, R, and SQL to manipulate and analyze the data. They also collaborate with other team members, such as business analysts and software developers, to develop data-driven solutions to business problems.",
-salary:"70k",
-experience:"4 years",
-location:"Hyderabad"},
-{jobtitle:"DATABASE ADMINISTRATOR",
-jobshowdescription:" A database administrator (DBA) is responsible for managing the performance, security, and availability of databases..",
-jobdescription:" A database administrator (DBA) is responsible for managing the performance, security, and availability of databases. They work with database management systems (DBMS) such as Oracle, SQL Server, and MySQL to create and manage databases. They ensure that databases are backed up, recoverable, and secure. They also monitor database performance and optimize database design to improve performance. They work with developers to ensure that databases are designed to meet application requirements.",
-salary:"80k",
-experience:"6 years",
-location:"Delhi"}
-]
 app.post("/login",async function(req,res){
-    loggedUser = req.body.username;
-    await User.findOne({userName : loggedUser}).then((user_found)=>{    
+    await User.findOne({userName : req.body.username}).then((user_found)=>{    
         if (user_found){   
+            loggedUser = user_found.userName
             try{        
                 if(bcrypt.compare(req.body.password, user_found.password)){
-                    res.render('userpage',{user : req.body.username,userslist:userlist})
+                Job.find().then((foundJobslist)=>{
+                        res.render('userpage',{user : loggedUser,userslist:foundJobslist})
+                    })
                 }else{
                     loginMessage = "Password doesn't match"
                     res.redirect('/login.html')
@@ -158,7 +117,7 @@ app.post("/login",async function(req,res){
         const newuser = new User({
             userName: req.body.username,
             firstName: req.body.firstname,
-            lastName: req.body.secondname,
+            lastName: req.body.lastname,
             email: req.body.email,
             password : hashed_password
         }); 
@@ -209,12 +168,13 @@ bcrypt.hash(admin_password,10,(err,hash)=>{
 
 
 app.post("/admin", async function(req,res){
-    
+
     const user = await Admin.findOne({adminUserName: req.body.adminusername});
     if (user){
         try{
             if(bcrypt.compare(req.body.adminpassword, user.adminPassword)){
-                res.render('adminIndex')
+                const foundjobslist = await Job.find()
+                res.render('adminIndex',{jlist:foundjobslist})
             }else{
                 adminMessage = "Password doesn't match"
                 res.redirect('/admin')
@@ -228,19 +188,63 @@ app.post("/admin", async function(req,res){
     }
    
 });
+/*    Admin Jobs list  */ 
+app.get("/adminIndex.html",async (req,res)=>{
+    await Job.find().then((foundJobslist)=>{
+        res.render('adminIndex',{jlist:foundJobslist});
+    })
+    
+});
 
 
+/*  getting description page jobtitle  */
+let apply_job;
+app.post("/userpage",async function(req,res){
+    
+    await Job.findOne({Job_id : req.body.job}).then((foundJob)=>{   
+        apply_job=foundJob    
+        res.render('description',{user:loggedUser,jobdetails:foundJob});
+    })
+
+});
+/*  getting description page jobtitle  */
+
+app.post("/description",async function(req,res){
+    
+    res.render('form',{job_tittle : apply_job.Title,user : loggedUser})
+    
+});
+ 
 /*  form  */ 
 
-app.get('/form',(req,res)=>{
-    
-    res.render('form');
-})
+const applicationSchema = new mongoose.Schema({
+    Job_id :Number,
+    Job_Title : String,
+    Username : String,
+    Name: String,
+    Email: String,
+    Phone: Number,
+    Address: String,
+    Applied_date:String,
+    Status : String
+});
+   
 
-app.post('/form.html',(req,res)=>{
-    
-    console.log(req.body)
-})
+const Application = mongoose.model('Application',applicationSchema);
+app.post("/form",async function(req,res){
+    const newappjob = new Application({
+        Job_id : apply_job.Job_id,
+        Job_Title : apply_job.Title,
+        Username : loggedUser,
+        Name : req.body.name,
+        Email : req.body.email,
+        Phone:req.body.Phonenumber,
+        Address:req.body.Address,
+        Applied_date:getDate(),
+        Status : "Not Reviewed"
+    })
+    newappjob.save();
+});
 
 /*    Manage JObs   */
 let randomNum;
@@ -277,7 +281,7 @@ function getDate(){
     let hours = date_ob.getHours();     // current hours
     let minutes = date_ob.getMinutes(); // current minutes
     let seconds = date_ob.getSeconds(); // current seconds
-    let date_time =  (date + " " + month + " " + year + " " + hours + ":" + minutes + ":" + seconds);    
+    let date_time =  (date + " " + month + " " + year + " " + hours + ":" + minutes);    
     return date_time
 }
 
@@ -304,10 +308,24 @@ app.post("/manageJobs",(req,res)=>{
 
 
 /*   user profile    */ 
-
+let phonenum,address = "";
 app.get('/userProfile',async(req,res)=>{
     await User.findOne({userName : loggedUser}).then(function(foundUser){
-        res.render('userProfile',{user:loggedUser,name:foundUser.firstName+" "+foundUser.lastName,email:foundUser.email})
+        res.render('userProfile',{user:loggedUser,
+                                  name:foundUser.firstName+" "+foundUser.lastName,
+                                  email:foundUser.email,
+                                  phone:phonenum,
+                                  })
     })
     
 })
+
+
+/*      admin applications   */ 
+
+app.get("/applications.html",async (req,res)=>{
+    await Application.find().then((foundApplications)=>{
+        res.render('applications',{applist : foundApplications})
+    })
+    
+});

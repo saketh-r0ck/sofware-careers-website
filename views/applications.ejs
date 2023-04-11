@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Pannel</title>
     <link rel="stylesheet" href="css/userslist.css">
+    <link rel="stylesheet" href="css/appilications.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script src="js/appilications.js" defer></script>
 </head>
 <body>
     <div class="section1">
@@ -25,19 +30,41 @@
             <div class="categoryblocks active"><a href="applications.html"><p>Applications</p></a></div>
         </div>
         <div class="container">
-            <div class="jobslist">
-                <table>                    
-                    <thead><tr><th>User Name 1</th><th>Job Id</th><th>Job Title</th><th>Contact</th><th><a href="">Resume</a></th><th>Status</th></th></thead>
-                    <tr><td>User Name 1</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 2</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 3</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 4</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 5</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 6</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 7</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                    <tr><td>User Name 8</td><td>Job Id</td><td>Job Title</td><td>Contact</td><td><a href="">Resume</a></td><td>Status</td></tr>
-                </table>
+            <div class="applist">
+                <div class="header">
+                    <div class="row details ">
+                        <div class="col-1">Job Id</div>
+                        <div class="col-3">Full Name</div>
+                        <div class="col-5">Job Title</div>
+                        <div class="col-2">Resume</div>
+                        <div class="col-1">Status</div>
+                    </div>
+                </div>
+
+                <%for(let i=0;i<applist.length;i++){%>
+                    <div class="application">
+                        <div class="row details">
+                            <div class="col-1"><%=applist[i].Job_id %></div>
+                            <div class="col-3"><%=applist[i].Name %></div>
+                            <div class="col-4"><%=applist[i].Job_Title %></div>
+                            <div class="col-2">Resume</div>
+                            <div class="col-2">
+                                <select name="status-btn" id="">
+                                    <option value="Accpted">Accpted</option>
+                                    <option value="Under Review">Under Review</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row contact">
+                            <div class="col-3">Contact Details:-</div>
+                            <div class="col-5"><span>Email : </span><%=applist[i].Email %></div>
+                            <div class="col-4"><span>Phone : </span><%= applist[i].Phone %></div>
+                        </div>
+                    </div>
+                <%}%>
             </div>
+
         </div>
     </div>
 </body>

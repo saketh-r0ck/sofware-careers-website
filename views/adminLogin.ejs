@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/adminLogin.css">
+    <script src="js/login.js" defer></script>
     
 </head>
 <body>
@@ -14,12 +15,14 @@
             <div class="heading"><h2 >Admin Login</h2></div>
             
             <div class="forms">
-                <form id="form" action="/admin" method="post">
+                <form id="admin-form" action="" method=""  onsubmit="return validateform()">
                     <p><%=message%></p>
+                    <div id="error-message" style="text-align: center; font-weight: bold; font-size: large;"></div>
+
                     <label for="username">Username :</label>
-                    <input class="inputs" name="adminusername" type="text" autocomplete="off" >
+                    <input class="inputs" name="adminusername" id="adminusername" type="text" autocomplete="off" required >
                     <label for="password">Password :</label>
-                    <input class="inputs" type="password" name="adminpassword" id="" >
+                    <input class="inputs" type="password" name="adminpassword" id="adminpassword" required >
                     <div class="btn"><button class="submitbtn" type="submit">Login</button></div>
                 </form>
             </div>
