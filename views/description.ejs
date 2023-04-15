@@ -39,7 +39,13 @@
                       <a class="nav-link " href="">Contact Us</a>
                   </li>
                   <li class="nav-item ">
-                      <a class="nav-link " href="userProfile"><%=user%></a>
+                      <a class="nav-link " 
+                      <%if(user == "Login"){%>
+                        href="login.html"
+                      <%}else{%>
+                        href="userProfile"
+                      <%}%>
+                      ><%=user%></a>
                   </li>
                   
               </ul>
@@ -62,10 +68,17 @@
           <h5 class="">Number of positions :&nbsp;&nbsp;<%= jobdetails.No_Of_Positions %></h5>
           <h5 class="">Employment Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<%= jobdetails.Employment_Type %></h5>
           <h5 class="">Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;<%= jobdetails.Location %></h5>
+          <h5 class="">Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;<%= jobdetails.Salary %></h5>
+          <h5 class="">Experience Required :&nbsp;&nbsp;<%= jobdetails.Experience %></h5>
         </div>
         <div class="col-4 applybtn">
-          <form action="/description" method="post">
-
+          <form action=
+          <%if(user == "Login"){%>
+            "login"
+          <%}else{%>
+            "/description"
+          <%}%>
+          method="post">
           <button name="job_id" value="<%= jobdetails.Job_id%>" style="border-color:#34dbff;cursor:pointer;width:180px;height:45px;background-color:white;color:#6673b0;letter-spacing :3px; border-radius: 9PX;"><h4>APPLY NOW</h4></button>
       </form>
        
@@ -74,17 +87,27 @@
     
     <div>
         <h3>Job description</h3>
-        <p><%= jobdetails.Job_Description %></p>
+        <%for(let k=0;k<description.length;k++){%>
+          <p><%= description[k] %></p>
+        <%}%>
+    </div>
+    
+    <div>
+        <h3>Required Skills and Qualifications</h3>
+        <ul>
+        <%for(let i=0;i<qualification.length;i++){%>
+          <li class="points"><%= qualification[i] %></li>
+        <%}%>
+      </ul>
     </div>
     <div>
-        <h3>Required Knowledge, Skills, and Abilities</h3>
-        <p><%= jobdetails.Roles_Responsibilities %></p>
-    </div>
-    <div>
-        <h3>Education + Experience</h3>
-        <p><%= jobdetails.Qualification %></p>
-       
-    </div>
+      <h3>Your Roles and Responsibilites</h3>
+      <ul>
+      <%for(let j=0;j<roles_responsibilities.length;j++){%>
+        <li class="points"><%= roles_responsibilities[j] %></li>
+      <%}%>
+      </ul>
+  </div>
   <div>
         
   </div>

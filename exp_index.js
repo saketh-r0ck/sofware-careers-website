@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const multer = require('multer')
+const fs = require('fs')
+const path = require('path')
 
 /*   Restapi   */
 const jobsApi = require('./routes/jobsRoute')
@@ -33,17 +36,25 @@ app.listen(port,function(){
 
 /*  gets */
 app.get('/',function(req,res){
-    res.sendFile(__dirname + '/index.html');
+    Job.find().then((foundJobslist)=>{
+        res.render('index',{userslist:foundJobslist})
+    })
 });
 
-
+app.post('/',async(req,res)=>{
+    await Job.findOne({Job_id : req.body.job}).then((foundJob)=>{   
+        apply_job=foundJob    
+        qual = apply_job.Qualification.split('\r\n')
+        roles = apply_job.Roles_Responsibilities.split('\r\n')
+        desc = apply_job.Job_Description.split('\r\n')
+        res.render('description',{user:loggedUser,jobdetails:foundJob,description: desc,qualification:qual,roles_responsibilities:roles});
+    })
+})
 
 let signupMessage = "";
 app.get('/signup.html',function(req,res){  
     res.render("signup",{message : signupMessage});
 });
-
-
 
 
 /*  search */
@@ -54,14 +65,19 @@ app.post("/search",async function(req,res){
     res.render('userpage',{user : loggedUser,userslist:data})
  });
 
+ app.get('/userpage',(req,res)=>{
+    if(loggedUser == undefined){
+        res.status(400).send("Cannot access page!!")
+    }else{
+        Job.find().then((foundJobslist)=>{
+            res.render('userpage',{user : loggedUser,userslist:foundJobslist})
+        })
+    }
+ })
 
 /*      admin     */
 
-
-
 /*  users page  */ 
-
-
 
 /*   login  */
 
@@ -76,14 +92,16 @@ app.post("/login",async function(req,res){
         if (user_found){   
             loggedUser = user_found.userName
             try{        
-                if(bcrypt.compare(req.body.password, user_found.password)){
-                Job.find().then((foundJobslist)=>{
-                        res.render('userpage',{user : loggedUser,userslist:foundJobslist})
-                    })
-                }else{
-                    loginMessage = "Password doesn't match"
-                    res.redirect('/login.html')
-                }
+                bcrypt.compare(req.body.password, user_found.password,function (err,result){   
+                    if(result == true){
+                        Job.find().then((foundJobslist)=>{
+                            res.render('userpage',{user : loggedUser,userslist:foundJobslist})
+                        })
+                    }else{
+                        loginMessage = "Password doesn't match"
+                        res.redirect('/login.html')
+                    }
+                })
             }catch(error){
                 return res.status(500).send()
             } 
@@ -108,7 +126,6 @@ app.post("/login",async function(req,res){
     const User = mongoose.model('User',usersSchema);
 
     app.post("/signup",async function(req,res){      
-        
         
         /* encrypting password  */ 
         const admin_password = req.body.password
@@ -172,13 +189,15 @@ app.post("/admin", async function(req,res){
     const user = await Admin.findOne({adminUserName: req.body.adminusername});
     if (user){
         try{
-            if(bcrypt.compare(req.body.adminpassword, user.adminPassword)){
-                const foundjobslist = await Job.find()
-                res.render('adminIndex',{jlist:foundjobslist})
-            }else{
-                adminMessage = "Password doesn't match"
-                res.redirect('/admin')
-            }
+            bcrypt.compare(req.body.adminpassword, user.adminPassword,async function (err,result){
+                if(result == true){
+                    const foundjobslist = await Job.find()
+                    res.render('adminIndex',{jlist:foundjobslist})
+                }else{
+                    adminMessage = "Password is wrong!!"
+                    res.redirect('/admin')
+                }
+            })
         }catch(error){
             res.status(500).send()
         }
@@ -186,7 +205,6 @@ app.post("/admin", async function(req,res){
         adminMessage = "Username is wrong!!";
         res.redirect('/admin');
     }
-   
 });
 /*    Admin Jobs list  */ 
 app.get("/adminIndex.html",async (req,res)=>{
@@ -196,6 +214,43 @@ app.get("/adminIndex.html",async (req,res)=>{
     
 });
 
+/*      admin Job delete options   */ 
+app.post("/deletejob",async function(req,res){
+    let job_id=req.body.job_deleteid;
+    
+    await Job.deleteOne({"Job_id":job_id})
+    res.redirect("/adminIndex.html")
+    
+});
+app.post("/editjob1",async function(req,res){
+    let job_id=req.body.job_editid;
+    let jobdetails=await Job.findOne({"Job_id":job_id})
+    res.render('editJob',{jlist:jobdetails})
+    
+});
+app.post("/editjob2",async function(req,res){
+    
+    let updatedjob = await Job.findOneAndUpdate(
+        { Job_id:req.body.job_id},
+        { $set:  {  Job_id : req.body.job_id,
+        Posted_Date :  getDate(),
+        Title : req.body.job_title,
+        Category : req.body.job_category,
+        No_Of_Positions : req.body.positions,
+        Experience : req.body.experience,
+        Salary : req.body.salary,
+        Employment_Type : req.body.employment_type,
+        Location : req.body.location,
+        Job_Description : req.body.job_description,
+        Qualification : req.body.qualification,
+        Roles_Responsibilities : req.body.roles_responsibilities
+           
+        }},
+      )
+      
+      res.redirect('adminIndex.html')
+});
+
 
 /*  getting description page jobtitle  */
 let apply_job;
@@ -203,19 +258,26 @@ app.post("/userpage",async function(req,res){
     
     await Job.findOne({Job_id : req.body.job}).then((foundJob)=>{   
         apply_job=foundJob    
-        res.render('description',{user:loggedUser,jobdetails:foundJob});
+        qual = apply_job.Qualification.split('\r\n')
+        roles = apply_job.Roles_Responsibilities.split('\r\n')
+        desc = apply_job.Job_Description.split('\r\n')
+        res.render('description',{user:loggedUser,jobdetails:foundJob,description: desc,qualification:qual,roles_responsibilities:roles});
     })
 
 });
 /*  getting description page jobtitle  */
-
+let formMessage;
 app.post("/description",async function(req,res){
-    
-    res.render('form',{job_tittle : apply_job.Title,user : loggedUser})
+    formMessage = "";
+    res.render('form',{job_tittle : apply_job.Title,user : loggedUser,message:formMessage})
     
 });
  
 /*  form  */ 
+app.get('/form1',async function(req,res){
+    console.log(formMessage)
+    res.render('form',{job_tittle: apply_job.Title,user : loggedUser,message:formMessage})
+})
 
 const applicationSchema = new mongoose.Schema({
     Job_id :Number,
@@ -226,12 +288,26 @@ const applicationSchema = new mongoose.Schema({
     Phone: Number,
     Address: String,
     Applied_date:String,
+    Resume_Path: String,
+    Resume_Mimetype : String,
     Status : String
 });
-   
 
 const Application = mongoose.model('Application',applicationSchema);
-app.post("/form",async function(req,res){
+
+const resumeStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/resumes')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname+"-"+file.originalname)
+    }
+})
+
+  
+const upload = multer({ storage: resumeStorage})
+
+app.post("/form",upload.single('resume'),async function(req,res){
     const newappjob = new Application({
         Job_id : apply_job.Job_id,
         Job_Title : apply_job.Title,
@@ -241,18 +317,42 @@ app.post("/form",async function(req,res){
         Phone:req.body.Phonenumber,
         Address:req.body.Address,
         Applied_date:getDate(),
+        Resume :req.file.filename,
+        Resume_Path: req.file.path,
+        Resume_Mimetype : req.file.mimetype,
         Status : "Not Reviewed"
     })
-    newappjob.save();
+    console.log(req.file)
+    console.log("form post: " + apply_job.Job_id)
+    await Application.find({Job_id:apply_job.Job_id,Username:loggedUser}).then((foundApplication)=>{
+        if(foundApplication.length == 0){
+            newappjob.save();
+            res.render('formsubmission')
+        }else{
+            formMessage = "*You have already applied for this job , Please check your aplication status."
+            res.redirect('/form1')
+        }
+    })
 });
+
+app.post("/formSubmission",(req,res)=>{
+    res.redirect("/userpage")
+})
 
 /*    Manage JObs   */
 let randomNum;
-app.get("/manageJobs",(req,res)=>{
+app.get("/manageJobs",async(req,res)=>{
     const min = 10000;
     const max = 99999;
     randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    res.render('manageJobs',{random:randomNum});
+    await Job.find({Job_id : randomNum}).then((foundJob)=>{
+        if (foundJob.length == 0){
+            res.render('manageJobs',{random:randomNum});
+        }else{
+            res.redirect('/manageJobs')
+        }
+    })
+    
 });
 
 const jobsSchema = new mongoose.Schema({
@@ -303,7 +403,7 @@ app.post("/manageJobs",(req,res)=>{
         Roles_Responsibilities : req.body.roles_responsibilities
     })
     newJob.save()
-  
+    res.redirect('/manageJobs')
 })
 
 
@@ -311,11 +411,16 @@ app.post("/manageJobs",(req,res)=>{
 let phonenum,address = "";
 app.get('/userProfile',async(req,res)=>{
     await User.findOne({userName : loggedUser}).then(function(foundUser){
-        res.render('userProfile',{user:loggedUser,
-                                  name:foundUser.firstName+" "+foundUser.lastName,
-                                  email:foundUser.email,
-                                  phone:phonenum,
-                                  })
+
+        Application.find({Username : loggedUser}).then((foundApplications)=>{
+            
+            let fullName = foundUser.firstName + " " + foundUser.lastName
+            res.render('userProfile',{user:loggedUser,
+                                    name : fullName,
+                                    email : foundUser.email,
+                                    userapplist: foundApplications
+                                    })
+        })
     })
     
 })
@@ -329,3 +434,28 @@ app.get("/applications.html",async (req,res)=>{
     })
     
 });
+
+app.get("/public/resumes/:resume",(req,res)=>{
+    const resume = req.params.resume
+    const filepath = path.join(__dirname ,"/public/resumes/",resume)
+    console.log(filepath)
+    if (fs.existsSync(filepath)) {
+        // for type of file
+        res.setHeader('Content-Type', 'application/pdf');
+        // for display in browser and for download
+        res.setHeader('Content-Disposition', 'inline; filename="' + resume + '"');
+  
+        const readStream = fs.createReadStream(filepath);
+        readStream.pipe(res);
+    } else {
+        res.status(404).send('File not found');
+    }
+})
+
+app.post('/applications',async(req,res)=>{
+    let del = await Application.findOneAndUpdate(
+        { Job_id: req.body.job_id, Username : req.body.user_name },
+        { $set: { Status: req.body.status_btn } },
+        { new: true });
+    res.redirect('/applications.html')
+})

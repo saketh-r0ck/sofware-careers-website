@@ -12,10 +12,13 @@
                 <%for(let i=0;i<jlist.length;i++){ %>
                     <div class="container">
                         <div class="row list mx-0">
-                            <div class="col-3 p-3"><%=jlist[i].Job_id%></div>
-                            <div class="col-5 p-3"><%=jlist[i].Title%></div>
+                            <div class="col-2 p-3"><%=jlist[i].Job_id%></div>
+                            <div class="col-4 p-3"><%=jlist[i].Title%></div>
                             <div class="col-3 p-3"><%=jlist[i].Posted_Date%></div>
-                            <button class="down_btn col-1 p-3"><i class="fa-solid fa-angle-down"></i></button>
+                            <button class="down_btn col-1 p-3"><i class="fa-solid fa-angle-down"></i> </button>
+                            <form action="/editjob1" method="post" class=" col-1 p-3" > <button type="submit" name="job_editid" value="<%=jlist[i].Job_id%>" class="edit_btn "><i class="fas fa-edit"></i> </button></form> 
+                            <form action="/deletejob" method="post" class="col-1 p-3" id="deletejob"><button type="submit" name="job_deleteid"  value="<%=jlist[i].Job_id%>" class="delete_btn"><i class="fa fa-trash" aria-hidden="true"></i> </button></form>
+                            
                         </div>
                         <div class="drop_down">
                     

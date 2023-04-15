@@ -10,8 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/form.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-  
+    <script src="js/userprofile.js" defer></script>
   </head>
   <body>
     <nav id="webnavbar" class="navbar fixed-top navbar-expand-lg navbar-light justify-content-center">
@@ -68,21 +67,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Software Engineer</td>
-                  <td>Jan 1, 2022</td>
-                  <td>Rejected</td>
-                </tr>
-                <tr>
-                  <td>Data Analyst</td>
-                  <td>Feb 15, 2022</td>
-                  <td>Under Review</td>
-                </tr>
-                <tr>
-                  <td>Product Manager</td>
-                  <td>Mar 10, 2022</td>
-                  <td>Interview Scheduled</td>
-                </tr>
+                <%for(let i=0;i<userapplist.length;i++){%>
+                  <tr>
+                    <td><%=userapplist[i].Job_Title%></td>
+                    <td><%=userapplist[i].Applied_date%></td>
+                    <td class="status"><%=userapplist[i].Status%></td>
+                  </tr>
+                <%}%>
               </tbody>
             </table>
           </div>
@@ -98,8 +89,8 @@
             <h2>User Information</h2>
             <p>Name: <%=name%></p>
             <p>Email: <%=email%></p>
-            <p>Phone: <%=phone%></p>
-            <p>Address : <%=add %></p>
+            <p>Phone: <%=userapplist[0].Phone%></p>
+            <p>Address : <%=userapplist[0].Address %></p>
             <a href="/" class="btn btn-primary">Logout</a>
           </div>
 

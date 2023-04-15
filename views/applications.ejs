@@ -35,32 +35,56 @@
                     <div class="row details ">
                         <div class="col-1">Job Id</div>
                         <div class="col-3">Full Name</div>
-                        <div class="col-5">Job Title</div>
+                        <div class="col-4">Job Title</div>
                         <div class="col-2">Resume</div>
-                        <div class="col-1">Status</div>
+                        <div class="col-2">Status</div>
                     </div>
                 </div>
 
                 <%for(let i=0;i<applist.length;i++){%>
                     <div class="application">
+                        <form action="/applications" method="post">
                         <div class="row details">
                             <div class="col-1"><%=applist[i].Job_id %></div>
                             <div class="col-3"><%=applist[i].Name %></div>
                             <div class="col-4"><%=applist[i].Job_Title %></div>
-                            <div class="col-2">Resume</div>
+                            <div class="col-2"><a href="<%=applist[i].Resume_Path%>">Resume</a></div>
                             <div class="col-2">
-                                <select name="status-btn" id="">
-                                    <option value="Accpted">Accpted</option>
-                                    <option value="Under Review">Under Review</option>
-                                    <option value="Rejected">Rejected</option>
-                                </select>
+                                
+                                    <select name="status_btn" class="status-select">
+                                        <option value="Under Review" 
+                                        <% if(applist[i].Status == 'Under Review'){ %>
+                                            selected 
+                                         <%}else{%> 
+                                            '' 
+                                         <%}%>
+                                        >Under Review</option>
+                                        <option value="Accepted"
+                                        <% if(applist[i].Status == 'Accepted'){ %>
+                                            selected 
+                                         <%}else{%> 
+                                            '' 
+                                         <%}%>
+                                        >Accepted</option>
+                                        <option value="Rejected" 
+                                        <% if(applist[i].Status == 'Rejected'){ %>
+                                            selected 
+                                         <%}else{%> 
+                                            '' 
+                                         <%}%>
+                                        >Rejected</option>
+                                    </select>
                             </div>
                         </div>
                         <div class="row contact">
-                            <div class="col-3">Contact Details:-</div>
+                            <div class="col-2">Contact Details:-</div>
                             <div class="col-5"><span>Email : </span><%=applist[i].Email %></div>
-                            <div class="col-4"><span>Phone : </span><%= applist[i].Phone %></div>
+                            <div class="col-3"><span>Phone : </span><%= applist[i].Phone %></div>
+                            <input type="hidden" name="job_id" value="<%=applist[i].Job_id%>">
+                            <input type="hidden" name="user_name" value="<%=applist[i].Username%>">
+                            <div class="col-2"><button type="submit">Update</button></div>
                         </div>
+                    </form>
                     </div>
                 <%}%>
             </div>

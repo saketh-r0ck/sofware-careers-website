@@ -10,3 +10,6 @@ for(let i=0;i<z.length;i++){
         y[i].style.display = "none";
     })
 } 
+
+
+
