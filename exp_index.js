@@ -8,7 +8,8 @@ const fs = require('fs')
 const path = require('path')
 
 /*   Restapi   */
-const jobsApi = require('./routes/jobsRoute')
+const jobsApi = require('./routes/jobsRoute');
+const { log } = require('console');
 
 const app = express();
 const port = 3000;
@@ -288,7 +289,8 @@ const applicationSchema = new mongoose.Schema({
     Phone: Number,
     Address: String,
     Applied_date:String,
-    Resume_Path: String,
+    Resume : String,
+    Resume_Path : String,
     Resume_Mimetype : String,
     Status : String
 });
@@ -300,7 +302,7 @@ const resumeStorage = multer.diskStorage({
       cb(null, 'public/resumes')
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname+"-"+file.originalname)
+        cb(null, file.fieldname+"-"+Date.now()+"-"+file.originalname)
     }
 })
 
@@ -318,7 +320,7 @@ app.post("/form",upload.single('resume'),async function(req,res){
         Address:req.body.Address,
         Applied_date:getDate(),
         Resume :req.file.filename,
-        Resume_Path: req.file.path,
+        Resume_Path : req.file.path,
         Resume_Mimetype : req.file.mimetype,
         Status : "Not Reviewed"
     })
@@ -336,6 +338,7 @@ app.post("/form",upload.single('resume'),async function(req,res){
 });
 
 app.post("/formSubmission",(req,res)=>{
+    console.log(loggedUser)
     res.redirect("/userpage")
 })
 
@@ -435,21 +438,22 @@ app.get("/applications.html",async (req,res)=>{
     
 });
 
-app.get("/public/resumes/:resume",(req,res)=>{
+app.get("/public/resumes/:resume",async(req,res)=>{
     const resume = req.params.resume
     const filepath = path.join(__dirname ,"/public/resumes/",resume)
     console.log(filepath)
-    if (fs.existsSync(filepath)) {
-        // for type of file
-        res.setHeader('Content-Type', 'application/pdf');
-        // for display in browser and for download
-        res.setHeader('Content-Disposition', 'inline; filename="' + resume + '"');
-  
-        const readStream = fs.createReadStream(filepath);
-        readStream.pipe(res);
-    } else {
-        res.status(404).send('File not found');
-    }
+    await Application.findOne({Resume : resume}).then((foundApplication)=>{
+        if (foundApplication) {
+            res.setHeader('Content-Type', foundApplication.Resume_Mimetype);
+            // for display in browser and for download
+            res.setHeader('Content-Disposition', 'inline; filename="' + resume + '"');
+    
+            const readStream = fs.createReadStream(filepath);
+            readStream.pipe(res);
+        } else {
+            res.status(404).send('File not found');
+        }
+    })
 })
 
 app.post('/applications',async(req,res)=>{
@@ -459,3 +463,5 @@ app.post('/applications',async(req,res)=>{
         { new: true });
     res.redirect('/applications.html')
 })
+
+console.log(Date.now())

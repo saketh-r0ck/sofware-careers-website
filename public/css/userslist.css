@@ -111,6 +111,7 @@ a{
 .section2 .container table thead th{
     font-size: 1.25rem;
     padding: 1rem 10px;
+    text-align: center;
 }
 .section2 .container table td{
     font-size: 1.25rem;

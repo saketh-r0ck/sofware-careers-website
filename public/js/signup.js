@@ -14,7 +14,7 @@ function validateForm() {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
   const confirmpassword = confirmpasswordInput.value.trim();
-  const error_message = 
+  const error_message = document.getElementById("error-message");
   if (!/^[a-zA-Z]+$/i.test(firstName)) {
     
     error_message.innerHTML= 'First name must contain only letters.';
@@ -54,7 +54,7 @@ function validateForm() {
   }
  
   else {
-    alert("You have succesfully registered."); 
+    
     document.getElementById("signupform").method="post"
     document.getElementById("signupform").action="/signup"
   }
