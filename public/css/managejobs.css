@@ -58,5 +58,6 @@
 }
 .section2 .container .section3 .forminputs textarea{
     margin: 5px 20px;
+    resize: both;
 }
 

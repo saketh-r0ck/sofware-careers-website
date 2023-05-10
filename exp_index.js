@@ -37,8 +37,11 @@ app.listen(port,function(){
 
 /*  gets */
 app.get('/',function(req,res){
+    loggedUser = "Login"
     Job.find().then((foundJobslist)=>{
-        res.render('index',{userslist:foundJobslist})
+    
+        res.render('index',{userslist:foundJobslist })
+    
     })
 });
 
@@ -53,25 +56,39 @@ app.post('/',async(req,res)=>{
 })
 
 let signupMessage = "";
-app.get('/signup.html',function(req,res){  
+app.get('/signup',function(req,res){  
     res.render("signup",{message : signupMessage});
 });
 
+app.get('/about_us',(req,res)=>{
+    console.log("about us: "+ loggedUser)
 
+    res.render("about_us",{user:loggedUser})
+})
+
+app.get('/contact_us',(req,res)=>{
+    console.log("conatact us: "+ loggedUser)
+
+    res.render('contact_us',{user:loggedUser})
+})
 /*  search */
 
 app.post("/search",async function(req,res){
     let searchkey =req.body.key;
     let data=await Job.find({Title:{$regex: searchkey,$options:'i'}})
-    res.render('userpage',{user : loggedUser,userslist:data})
+    if (data.length == 0){
+        res.render('userpage',{user: loggedUser,userslist:data, searchMessage : "No Jobs Found!"})
+    }else{
+        res.render('userpage',{user : loggedUser,userslist:data, searchMessage : ""})
+    }
  });
 
  app.get('/userpage',(req,res)=>{
-    if(loggedUser == undefined){
-        res.status(400).send("Cannot access page!!")
+    if(loggedUser == "Login"){
+        res.redirect('/')
     }else{
         Job.find().then((foundJobslist)=>{
-            res.render('userpage',{user : loggedUser,userslist:foundJobslist})
+            res.render('userpage',{user : loggedUser,userslist:foundJobslist,searchMessage : ""})
         })
     }
  })
@@ -87,7 +104,7 @@ app.get('/login.html',(req,res)=>{
     res.render('login',{message: loginMessage});
 });
 
-let loggedUser;
+let loggedUser = "Login";
 app.post("/login",async function(req,res){
     await User.findOne({userName : req.body.username}).then((user_found)=>{    
         if (user_found){   
@@ -96,7 +113,7 @@ app.post("/login",async function(req,res){
                 bcrypt.compare(req.body.password, user_found.password,function (err,result){   
                     if(result == true){
                         Job.find().then((foundJobslist)=>{
-                            res.render('userpage',{user : loggedUser,userslist:foundJobslist})
+                            res.render('userpage',{user : loggedUser,userslist:foundJobslist,searchMessage : ""})
                         })
                     }else{
                         loginMessage = "Password doesn't match"
@@ -147,7 +164,7 @@ app.post("/login",async function(req,res){
                 res.redirect("/login.html");
             }else{
                 signupMessage = "User Existed try another user";
-                res.redirect('/signup.html');
+                res.redirect('/signup');
             }
         });
         
@@ -256,7 +273,6 @@ app.post("/editjob2",async function(req,res){
 /*  getting description page jobtitle  */
 let apply_job;
 app.post("/userpage",async function(req,res){
-    
     await Job.findOne({Job_id : req.body.job}).then((foundJob)=>{   
         apply_job=foundJob    
         qual = apply_job.Qualification.split('\r\n')
@@ -270,12 +286,16 @@ app.post("/userpage",async function(req,res){
 let formMessage;
 app.post("/description",async function(req,res){
     formMessage = "";
+    console.log("description: "+ loggedUser)
+
     res.render('form',{job_tittle : apply_job.Title,user : loggedUser,message:formMessage})
     
 });
  
 /*  form  */ 
 app.get('/form1',async function(req,res){
+    console.log("form: "+ loggedUser)
+
     console.log(formMessage)
     res.render('form',{job_tittle: apply_job.Title,user : loggedUser,message:formMessage})
 })
@@ -324,12 +344,17 @@ app.post("/form",upload.single('resume'),async function(req,res){
         Resume_Mimetype : req.file.mimetype,
         Status : "Not Reviewed"
     })
-    console.log(req.file)
-    console.log("form post: " + apply_job.Job_id)
     await Application.find({Job_id:apply_job.Job_id,Username:loggedUser}).then((foundApplication)=>{
         if(foundApplication.length == 0){
-            newappjob.save();
-            res.render('formsubmission')
+            const allowedMimeTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!allowedMimeTypes.includes(req.file.mimetype)) {
+                formMessage = "Resume should be PDF ,Doc or Docx format"
+                res.redirect('/form1')
+
+            }else{ 
+                newappjob.save();
+                res.render('formsubmission')
+            }
         }else{
             formMessage = "*You have already applied for this job , Please check your aplication status."
             res.redirect('/form1')
@@ -338,7 +363,6 @@ app.post("/form",upload.single('resume'),async function(req,res){
 });
 
 app.post("/formSubmission",(req,res)=>{
-    console.log(loggedUser)
     res.redirect("/userpage")
 })
 
@@ -390,7 +414,7 @@ function getDate(){
 
 
 app.post("/manageJobs",(req,res)=>{
-    
+    console.log(req.body)
     const newJob = new Job({
         Job_id : randomNum,
         Posted_Date :  getDate(),
@@ -413,7 +437,10 @@ app.post("/manageJobs",(req,res)=>{
 /*   user profile    */ 
 let phonenum,address = "";
 app.get('/userProfile',async(req,res)=>{
-    await User.findOne({userName : loggedUser}).then(function(foundUser){
+    if (loggedUser == "Login"){
+        res.render('login',{message: loginMessage})
+    }else{
+        await User.findOne({userName : loggedUser}).then(function(foundUser){
 
         Application.find({Username : loggedUser}).then((foundApplications)=>{
             
@@ -425,7 +452,18 @@ app.get('/userProfile',async(req,res)=>{
                                     })
         })
     })
+    }
     
+})
+
+app.get('/DeleteAccount/:username',async(req,res)=>{
+    deleteUser = req.params.username
+    await Application.deleteMany({Username:deleteUser}).then(async(err)=>{
+        await User.deleteOne({userName:deleteUser})
+
+    })
+    loggedUser = "Login"
+    res.redirect('/')
 })
 
 
@@ -441,7 +479,6 @@ app.get("/applications.html",async (req,res)=>{
 app.get("/public/resumes/:resume",async(req,res)=>{
     const resume = req.params.resume
     const filepath = path.join(__dirname ,"/public/resumes/",resume)
-    console.log(filepath)
     await Application.findOne({Resume : resume}).then((foundApplication)=>{
         if (foundApplication) {
             res.setHeader('Content-Type', foundApplication.Resume_Mimetype);
@@ -464,4 +501,4 @@ app.post('/applications',async(req,res)=>{
     res.redirect('/applications.html')
 })
 
-console.log(Date.now())
+
