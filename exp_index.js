@@ -12,7 +12,7 @@ const jobsApi = require('./routes/jobsRoute');
 const { log } = require('console');
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use('/jobs',jobsApi)
 
@@ -40,7 +40,7 @@ app.get('/',function(req,res){
     loggedUser = "Login"
     Job.find().then((foundJobslist)=>{
     
-        res.render('index',{userslist:foundJobslist })
+        res.render('index',{userslist:foundJobslist,searchMessage :"" })
     
     })
 });
@@ -88,7 +88,7 @@ app.post("/search",async function(req,res){
         res.redirect('/')
     }else{
         Job.find().then((foundJobslist)=>{
-            res.render('userpage',{user : loggedUser,userslist:foundJobslist,searchMessage : ""})
+            res.render('userpage',{user : loggedUser,userslist:foundJobslist,searchMessage : " "})
         })
     }
  })
